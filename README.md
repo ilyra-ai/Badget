@@ -56,7 +56,7 @@ Lyra-finAI implements a **dual-layer architecture** with clean separation betwee
 
 ## What we are using
 
-Next.js 15, Better-auth, Prisma, PostgreSQL, Shadcn/ui, Tailwind CSS, Framer Motion, and TypeScript.
+Next.js 15, Better-auth, Prisma with Supabase PostgreSQL, Shadcn/ui, Tailwind CSS, Framer Motion, and TypeScript.
 <br/>
 All seamlessly integrated to accelerate financial management innovation.
 
@@ -110,7 +110,7 @@ cp .env.example .env.local
 
    The `.env.example` file contains detailed explanations for each variable. Key requirements:
 
-   1. **Database**: We are using [Prisma Database](http://prisma.io/) (This is created over)  
+   1. **Database**: Provision a Supabase project and copy the `connection string` from Database > Connection pooling into `DATABASE_URL`. Copy the `Direct connection string` into `DIRECT_URL`. Both values must use the service role password so Prisma can run migrations. Supabase requires the pooled URL for the application runtime and the direct URL for schema changes.
    2. **Authentication**: Configure Better-auth OAuth providers
 
    **For Google Auth Setup:**
@@ -146,7 +146,7 @@ pnpm dev
 ### Platforms
 
 - [Vercel](https://vercel.com/) – Seamless deployment and preview environments
-- [Neon](https://neon.tech/) – Serverless PostgreSQL for scalable data management
+- [Supabase](https://supabase.com/) – Managed PostgreSQL with connection pooling and service role access
 - [Resend](https://resend.com/) – Reliable email delivery infrastructure
 
 ### UI & Design
