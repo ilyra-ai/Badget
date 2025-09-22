@@ -1,19 +1,19 @@
 <a href="https://badget-eight-gilt.vercel.app/">
-  <h1 align="center">Badget: AI-Powered Financial Management Platform</h1>
+  <h1 align="center">Lyra-finAI: AI-Powered Financial Management Platform</h1>
 </a>
 
- <img width="1440" alt="dashboard_mockup" src="https://github.com/projectx-codehagen/Badget/assets/24507211/2c2b8e43-3d18-4b28-b8d0-5dc0cbdb530f">
+ <img width="1440" alt="dashboard_mockup" src="https://github.com/projectx-codehagen/Lyra-finAI/assets/24507211/2c2b8e43-3d18-4b28-b8d0-5dc0cbdb530f">
 
 <p align="center">
-  Ushering in a new era of financial management with cutting-edge AI. Badget redefines how you track, analyze, and optimize your finances, ensuring smarter, more secure financial decisions.
+  Ushering in a new era of financial management with cutting-edge AI. Lyra-finAI redefines how you track, analyze, and optimize your finances, ensuring smarter, more secure financial decisions.
 </p>
 
 <p align="center">
   <!-- <a href="https://twitter.com/placeholder">
     <img src="https://img.shields.io/twitter/follow/badget?style=flat&label=%40badgety&logo=twitter&color=0bf&logoColor=fff" alt="Twitter" />
   </a> -->
-  <a href="https://github.com/projectx-codehagen/Badget/blob/main/LICENSE.md">
-    <img src="https://img.shields.io/github/license/projectx-codehagen/Badget?label=license&logo=github&color=f80&logoColor=fff" alt="License" />
+  <a href="https://github.com/projectx-codehagen/Lyra-finAI/blob/main/LICENSE.md">
+    <img src="https://img.shields.io/github/license/projectx-codehagen/Lyra-finAI?label=license&logo=github&color=f80&logoColor=fff" alt="License" />
   </a>
 </p>
 
@@ -28,7 +28,7 @@
 
 ## Introduction
 
-Welcome to Badget, the "Copilot for Money" - an AI-powered financial management platform that provides unparalleled insights into your spending habits and financial patterns. Built with a family-first design, Badget empowers households to budget better, track expenses effortlessly, and achieve their financial goals through intelligent automation and real-time insights.
+Welcome to Lyra-finAI, the "Copilot for Money" - an AI-powered financial management platform that provides unparalleled insights into your spending habits and financial patterns. Built with a family-first design, Lyra-finAI empowers households to budget better, track expenses effortlessly, and achieve their financial goals through intelligent automation and real-time insights.
 
 **Key Features:**
 - **Unified Financial Dashboard** - All accounts in one place with smart categorization
@@ -41,7 +41,7 @@ Welcome to Badget, the "Copilot for Money" - an AI-powered financial management 
 
 ## Architecture
 
-Badget implements a **dual-layer architecture** with clean separation between authentication and business logic:
+Lyra-finAI implements a **dual-layer architecture** with clean separation between authentication and business logic:
 
 ### Authentication Layer
 - User identity and session management via **Better-auth**  
@@ -62,7 +62,7 @@ All seamlessly integrated to accelerate financial management innovation.
 
 ## Directory Structure
 
-Badget follows a clean, scalable architecture:
+Lyra-finAI follows a clean, scalable architecture:
 
     .
     ├── src                          # Main project lives here
@@ -85,7 +85,7 @@ Badget follows a clean, scalable architecture:
 Clone & create this repo locally with the following command:
 
 ```bash
-git clone https://github.com/codehagen/Badget
+git clone https://github.com/codehagen/Lyra-finAI
 ```
 
 1. Install dependencies using pnpm:

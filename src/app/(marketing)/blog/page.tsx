@@ -15,8 +15,8 @@ import { StaticBlogCategoryFilter } from "@/components/blog/static-blog-category
 import { constructMetadata } from "@/lib/construct-metadata";
 
 export const metadata = constructMetadata({
-  title: "Blog - Badget",
-  description: "Insights, tutorials, and updates from the Badget team. Learn how to optimize your link management strategy.",
+  title: "Blog - Lyra-finAI",
+  description: "Insights, tutorials, and updates from the Lyra-finAI team. Learn how to optimize your financial strategy.",
 });
 
 export default function BlogPage() {
@@ -33,8 +33,8 @@ export default function BlogPage() {
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold tracking-tight mb-4">Blog</h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Insights, tutorials, and updates from the Badget team. Learn how to
-            optimize your link management strategy.
+            Insights, tutorials, and updates from the Lyra-finAI team. Learn how
+            to optimize your financial strategy.
           </p>
         </div>
 

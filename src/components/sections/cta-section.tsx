@@ -1,9 +1,11 @@
+"use client";
+
 import Image from "next/image";
-import { siteConfig } from "@/lib/config";
+import { useMarketingContent } from "@/lib/marketing-translations";
 import Link from "next/link";
 
 export function CTASection() {
-  const { ctaSection } = siteConfig;
+  const { ctaSection } = useMarketingContent();
 
   return (
     <section

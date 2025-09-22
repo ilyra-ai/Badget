@@ -1,9 +1,10 @@
 "use client";
 
 import { SectionHeader } from "@/components/section-header";
-import { siteConfig } from "@/lib/config";
+import { useMarketingContent } from "@/lib/marketing-translations";
 import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
+import Link from "next/link";
 import { useState } from "react";
 
 interface TabsProps {
@@ -67,12 +68,14 @@ export function PricingSection() {
   const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">(
     "monthly",
   );
+  const { pricing } = useMarketingContent();
+  const pricingItems = pricing.pricingItems;
 
   // Update price animation
   const PriceDisplay = ({
     tier,
   }: {
-    tier: (typeof siteConfig.pricing.pricingItems)[0];
+    tier: (typeof pricing.pricingItems)[number];
   }) => {
     const price = billingCycle === "yearly" ? tier.yearlyPrice : tier.price;
 
@@ -100,10 +103,10 @@ export function PricingSection() {
     >
       <SectionHeader>
         <h2 className="text-3xl md:text-4xl font-medium tracking-tighter text-center text-balance">
-          {siteConfig.pricing.title}
+          {pricing.title}
         </h2>
         <p className="text-muted-foreground text-center text-balance font-medium">
-          {siteConfig.pricing.description}
+          {pricing.description}
         </p>
       </SectionHeader>
       <div className="relative w-full h-full">
@@ -116,7 +119,7 @@ export function PricingSection() {
         </div>
 
         <div className="grid min-[650px]:grid-cols-2 min-[900px]:grid-cols-3 gap-4 w-full max-w-6xl mx-auto px-6">
-          {siteConfig.pricing.pricingItems.map((tier) => (
+          {pricingItems.map((tier) => (
             <div
               key={tier.name}
               className={cn(
@@ -145,22 +148,21 @@ export function PricingSection() {
               </div>
 
               <div className="flex flex-col gap-2 p-4">
-                <button
-                  className={`h-10 w-full flex items-center justify-center text-sm font-normal tracking-wide rounded-full px-4 cursor-pointer transition-all ease-out active:scale-95 ${
+                <Link
+                  href={tier.href}
+                  className={`h-10 w-full flex items-center justify-center text-sm font-normal tracking-wide rounded-full px-4 transition-all ease-out active:scale-95 ${
                     tier.isPopular
                       ? `${tier.buttonColor} shadow-[inset_0_1px_2px_rgba(255,255,255,0.25),0_3px_3px_-1.5px_rgba(16,24,40,0.06),0_1px_1px_rgba(16,24,40,0.08)]`
                       : `${tier.buttonColor} shadow-[0px_1px_2px_0px_rgba(255,255,255,0.16)_inset,0px_3px_3px_-1.5px_rgba(16,24,40,0.24),0px_1px_1px_-0.5px_rgba(16,24,40,0.20)]`
                   }`}
                 >
                   {tier.buttonText}
-                </button>
+                </Link>
               </div>
               <hr className="border-border dark:border-white/20" />
               <div className="p-4">
-                {tier.name !== "Basic" && (
-                  <p className="text-sm mb-4">
-                    Everything in {tier.name === "Pro" ? "Basic" : "Pro"} +
-                  </p>
+                {tier.included && (
+                  <p className="text-sm mb-4">{tier.included}</p>
                 )}
                 <ul className="space-y-3">
                   {tier.features.map((feature) => (

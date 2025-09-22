@@ -1,9 +1,10 @@
 import { FirstBentoAnimation } from "@/components/first-bento-animation";
 import { FourthBentoAnimation } from "@/components/fourth-bento-animation";
+import { BudgetOptimizationAnimation } from "@/components/growth-section/budget-optimization";
+import { SpendingInsightsAnimation } from "@/components/growth-section/spending-insights";
 import { SecondBentoAnimation } from "@/components/second-bento-animation";
 import { ThirdBentoAnimation } from "@/components/third-bento-animation";
 import { cn } from "@/lib/utils";
-import { motion } from "motion/react";
 
 export const Highlight = ({
   children,
@@ -27,7 +28,7 @@ export const Highlight = ({
 export const BLUR_FADE_DELAY = 0.15;
 
 export const siteConfig = {
-  name: "Badget",
+  name: "Lyra-finAI",
   description:
     "AI-powered personal finance app that turns raw transactions into real-time spending insights, predictive budgets & holistic financial health scores.",
   cta: "Get Started",
@@ -43,7 +44,7 @@ export const siteConfig = {
     "Expense Insights",
   ],
   links: {
-    email: "support@badget.tech",
+    email: "support@lyra-finai.com",
     twitter: "https://tx.com/codehagen",
     discord: "https://discord.gg/TK7k6uY4",
     github: "https://github.com/codehagen",
@@ -75,15 +76,15 @@ export const siteConfig = {
     badge: "AI-powered financial insights",
     title: "Master Your Money With AI",
     description:
-      "Badget turns raw transactions into real-time spending insights, predictive budgets, and a holistic financial health score. Spend smarter, save faster.",
+      "Lyra-finAI turns raw transactions into real-time spending insights, predictive budgets, and a holistic financial health score. Spend smarter, save faster.",
     cta: {
       primary: {
-        text: "Join Waitlist",
-        href: "/waitlist",
+        text: "Try for Free",
+        href: "/sign-up",
       },
       secondary: {
-        text: "Log in",
-        href: "/waitlist",
+        text: "Sign In",
+        href: "/sign-in",
       },
     },
   },
@@ -291,7 +292,7 @@ export const siteConfig = {
   featureSection: {
     title: "Simple. Smart. Secure.",
     description:
-      "Discover how Badget transforms your financial data into actionable insights in four easy steps",
+      "Discover how Lyra-finAI transforms your financial data into actionable insights in four easy steps",
     items: [
       {
         id: 1,
@@ -398,216 +399,14 @@ export const siteConfig = {
     items: [
       {
         id: 1,
-        content: (
-          <div className="relative flex size-full items-center justify-center overflow-hidden">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              className="relative w-full h-full flex items-center justify-center"
-            >
-              {/* Animated Budget Bars */}
-              <div className="relative w-full max-w-sm space-y-4 p-8">
-                <div className="text-center mb-6">
-                  <div className="text-2xl font-semibold text-primary">
-                    Budget Optimization
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    AI-Powered Recommendations
-                  </div>
-                </div>
-
-                {/* Budget Categories */}
-                {[
-                  {
-                    name: "Food",
-                    current: 75,
-                    optimized: 60,
-                    color: "bg-blue-500",
-                  },
-                  {
-                    name: "Transport",
-                    current: 40,
-                    optimized: 35,
-                    color: "bg-green-500",
-                  },
-                  {
-                    name: "Entertainment",
-                    current: 90,
-                    optimized: 70,
-                    color: "bg-purple-500",
-                  },
-                  {
-                    name: "Shopping",
-                    current: 85,
-                    optimized: 65,
-                    color: "bg-orange-500",
-                  },
-                ].map((category, index) => (
-                  <div key={category.name} className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-primary">{category.name}</span>
-                      <span className="text-muted-foreground">
-                        ${category.optimized}%
-                      </span>
-                    </div>
-                    <div className="relative h-3 bg-muted rounded-full overflow-hidden">
-                      <motion.div
-                        className={cn(category.color, "h-full rounded-full")}
-                        initial={{ width: `${category.current}%` }}
-                        animate={{ width: `${category.optimized}%` }}
-                        transition={{
-                          duration: 1.5,
-                          delay: index * 0.2,
-                          ease: "easeInOut",
-                        }}
-                      />
-                    </div>
-                  </div>
-                ))}
-
-                <div className="mt-6 p-3 bg-accent rounded-lg">
-                  <div className="text-sm text-center">
-                    <span className="text-secondary font-semibold">+$280</span>
-                    <span className="text-muted-foreground">
-                      {" "}
-                      saved this month
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        ),
+        content: <BudgetOptimizationAnimation />,
         title: "Custom Budget Optimization",
         description:
           "AI creates budgets that actually work for your lifestyle, automatically adjusting to help you save more without sacrificing what matters most.",
       },
       {
         id: 2,
-        content: (
-          <div className="relative flex size-full items-center justify-center overflow-hidden">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              className="relative w-full h-full flex items-center justify-center"
-            >
-              {/* Spending Pattern Visualization */}
-              <div className="relative w-full max-w-sm p-8">
-                <div className="text-center mb-6">
-                  <div className="text-2xl font-semibold text-primary">
-                    Spending Insights
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    Behavioral Pattern Analysis
-                  </div>
-                </div>
-
-                {/* Central Node */}
-                <div className="relative flex items-center justify-center">
-                  <div className="w-20 h-20 bg-secondary rounded-full flex items-center justify-center mb-4">
-                    <div className="text-white font-bold text-sm">YOU</div>
-                  </div>
-
-                  {/* Orbiting Spending Categories */}
-                  {[
-                    {
-                      name: "Coffee",
-                      angle: 0,
-                      distance: 60,
-                      size: 12,
-                      color: "bg-yellow-500",
-                    },
-                    {
-                      name: "Groceries",
-                      angle: 72,
-                      distance: 70,
-                      size: 16,
-                      color: "bg-green-500",
-                    },
-                    {
-                      name: "Gas",
-                      angle: 144,
-                      distance: 65,
-                      size: 14,
-                      color: "bg-red-500",
-                    },
-                    {
-                      name: "Dining",
-                      angle: 216,
-                      distance: 75,
-                      size: 18,
-                      color: "bg-blue-500",
-                    },
-                    {
-                      name: "Shopping",
-                      angle: 288,
-                      distance: 55,
-                      size: 10,
-                      color: "bg-purple-500",
-                    },
-                  ].map((item, index) => (
-                    <motion.div
-                      key={item.name}
-                      className={cn(
-                        item.color,
-                        "absolute rounded-full flex items-center justify-center text-white text-xs font-medium"
-                      )}
-                      style={{
-                        width: `${item.size}px`,
-                        height: `${item.size}px`,
-                        left: `calc(50% + ${Math.cos((item.angle * Math.PI) / 180) * item.distance}px)`,
-                        top: `calc(50% + ${Math.sin((item.angle * Math.PI) / 180) * item.distance}px)`,
-                        transform: "translate(-50%, -50%)",
-                      }}
-                      initial={{ scale: 0, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      transition={{
-                        duration: 0.5,
-                        delay: index * 0.1,
-                        ease: "easeOut",
-                      }}
-                    >
-                      {item.name.slice(0, 3)}
-                    </motion.div>
-                  ))}
-
-                  {/* Connecting Lines */}
-                  {[0, 72, 144, 216, 288].map((angle, index) => (
-                    <motion.div
-                      key={angle}
-                      className="absolute w-px bg-border opacity-30"
-                      style={{
-                        height: "80px",
-                        left: "50%",
-                        top: "50%",
-                        transformOrigin: "0 0",
-                        transform: `rotate(${angle}deg)`,
-                      }}
-                      initial={{ scaleY: 0 }}
-                      animate={{ scaleY: 1 }}
-                      transition={{
-                        duration: 0.3,
-                        delay: 0.5 + index * 0.05,
-                        ease: "easeOut",
-                      }}
-                    />
-                  ))}
-                </div>
-
-                <div className="mt-8 text-center space-y-2">
-                  <div className="text-sm text-secondary font-semibold">
-                    Pattern Detected
-                  </div>
-                  <div className="text-xs text-muted-foreground">
-                    You spend 40% more on weekends
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        ),
+        content: <SpendingInsightsAnimation />,
         title: "Behavioral Spending Insights",
         description:
           "Understand your spending patterns and discover optimization opportunities through AI-powered behavioral analysis of your financial habits.",
@@ -621,7 +420,7 @@ export const siteConfig = {
       "Join thousands of users who have improved their financial health with AI-powered insights and predictive budgeting.",
     primaryButton: {
       text: "Start Your Free Journey",
-      href: "/waitlist",
+      href: "/sign-up",
     },
     secondaryButton: {
       text: "Talk to Founder",
@@ -635,7 +434,7 @@ export const siteConfig = {
     pricingItems: [
       {
         name: "Free",
-        href: "#",
+        href: "/sign-up",
         price: "$0",
         period: "month",
         yearlyPrice: "$0",
@@ -652,7 +451,7 @@ export const siteConfig = {
       },
       {
         name: "Premium",
-        href: "#",
+        href: "/sign-up",
         price: "$9",
         period: "month",
         yearlyPrice: "$90",
@@ -674,7 +473,7 @@ export const siteConfig = {
       },
       {
         name: "Family",
-        href: "#",
+        href: "/sign-up",
         price: "$19",
         period: "month",
         yearlyPrice: "$190",
@@ -701,7 +500,7 @@ export const siteConfig = {
       img: "https://randomuser.me/api/portraits/men/91.jpg",
       description: (
         <p>
-          Badget&apos;s AI-driven spending analysis has transformed how I help
+          Lyra-finAI&apos;s AI-driven spending analysis has transformed how I help
           clients manage their finances.
           <Highlight>
             Insights are now more accurate and actionable than ever.
@@ -713,11 +512,11 @@ export const siteConfig = {
     {
       id: "2",
       name: "Samantha Lee",
-      role: "Working Mom & Badget User",
+      role: "Working Mom & Lyra-finAI User",
       img: "https://randomuser.me/api/portraits/women/12.jpg",
       description: (
         <p>
-          Using Badget&apos;s predictive budgeting has completely changed our
+          Using Lyra-finAI&apos;s predictive budgeting has completely changed our
           family&apos;s financial planning.
           <Highlight>We&apos;re saving 40% more each month!</Highlight> Highly
           recommend to any family wanting financial clarity.
@@ -732,7 +531,7 @@ export const siteConfig = {
       description: (
         <p>
           As a business owner, I need to track both personal and business
-          expenses. Badget&apos;s AI categorization does this perfectly.
+          expenses. Lyra-finAI&apos;s AI categorization does this perfectly.
           <Highlight>My financial organization has doubled.</Highlight>{" "}
           Essential tool for entrepreneurs.
         </p>
@@ -898,43 +697,43 @@ export const siteConfig = {
   faqSection: {
     title: "Frequently Asked Questions",
     description:
-      "Answers to common questions about Badget and its features. If you have any other questions, please don't hesitate to contact us.",
+      "Answers to common questions about Lyra-finAI and its features. If you have any other questions, please don't hesitate to contact us.",
     faQitems: [
       {
         id: 1,
-        question: "What is Badget?",
+        question: "What is Lyra-finAI?",
         answer:
-          "Badget is an AI-powered personal finance app that transforms your raw transaction data into actionable insights. It creates predictive budgets, tracks spending patterns, and provides a comprehensive financial health score to help you make smarter money decisions.",
+          "Lyra-finAI is an AI-powered personal finance app that transforms your raw transaction data into actionable insights. It creates predictive budgets, tracks spending patterns, and provides a comprehensive financial health score to help you make smarter money decisions.",
       },
       {
         id: 2,
-        question: "How does Badget analyze my spending?",
+        question: "How does Lyra-finAI analyze my spending?",
         answer:
-          "Badget uses advanced AI algorithms to categorize your transactions, identify spending patterns, detect unusual purchases, and predict future cash flow. It learns from your financial behavior to provide increasingly personalized insights and recommendations.",
+          "Lyra-finAI uses advanced AI algorithms to categorize your transactions, identify spending patterns, detect unusual purchases, and predict future cash flow. It learns from your financial behavior to provide increasingly personalized insights and recommendations.",
       },
       {
         id: 3,
         question: "Is my financial data secure?",
         answer:
-          "Yes, Badget uses bank-grade encryption and security measures that meet or exceed industry standards. We employ end-to-end encryption, secure data centers, and never store your banking credentials. Your data is protected with the same level of security used by major financial institutions.",
+          "Yes, Lyra-finAI uses bank-grade encryption and security measures that meet or exceed industry standards. We employ end-to-end encryption, secure data centers, and never store your banking credentials. Your data is protected with the same level of security used by major financial institutions.",
       },
       {
         id: 4,
         question: "Which banks and accounts can I connect?",
         answer:
-          "Badget supports connections to over 10,000 financial institutions including major banks, credit unions, credit cards, investment accounts, and crypto wallets. We use secure API connections that never require sharing your login credentials.",
+          "Lyra-finAI supports connections to over 10,000 financial institutions including major banks, credit unions, credit cards, investment accounts, and crypto wallets. We use secure API connections that never require sharing your login credentials.",
       },
       {
         id: 5,
         question: "Is there a free version available?",
         answer:
-          "Yes, Badget offers a free tier that includes basic spending insights, simple budget tracking, and monthly financial health scores. You can connect up to 2 accounts and access core features without any cost.",
+          "Yes, Lyra-finAI offers a free tier that includes basic spending insights, simple budget tracking, and monthly financial health scores. You can connect up to 2 accounts and access core features without any cost.",
       },
       {
         id: 6,
-        question: "How does Badget help me save money?",
+        question: "How does Lyra-finAI help me save money?",
         answer:
-          "Badget identifies spending patterns, suggests budget optimizations, alerts you to unusual expenses, and provides predictive insights about your financial future. Many users save 20-30% more each month by following Badget's AI-powered recommendations.",
+          "Lyra-finAI identifies spending patterns, suggests budget optimizations, alerts you to unusual expenses, and provides predictive insights about your financial future. Many users save 20-30% more each month by following Lyra-finAI's AI-powered recommendations.",
       },
     ],
   },
@@ -944,7 +743,7 @@ export const siteConfig = {
     backgroundImage: "/cta-background.png",
     button: {
       text: "Start Your Free Financial Journey Today",
-      href: "#",
+      href: "/sign-up",
     },
     subtext: "No credit card required, upgrade anytime",
   },
@@ -952,28 +751,28 @@ export const siteConfig = {
     {
       title: "Company",
       links: [
-        { id: 1, title: "About", url: "/waitlist" },
-        { id: 2, title: "Contact", url: "/waitlist" },
-        { id: 3, title: "Blog", url: "/waitlist" },
-        { id: 4, title: "Story", url: "/waitlist" },
+        { id: 1, title: "About", url: "/about" },
+        { id: 2, title: "Contact", url: "/contact" },
+        { id: 3, title: "Blog", url: "/blog" },
+        { id: 4, title: "Story", url: "/open" },
       ],
     },
     {
       title: "Products",
       links: [
-        { id: 5, title: "Company", url: "/waitlist" },
-        { id: 6, title: "Product", url: "/waitlist" },
+        { id: 5, title: "Platform", url: "/sign-up" },
+        { id: 6, title: "Dashboard", url: "/dashboard" },
         { id: 7, title: "Open Startup", url: "/open" },
-        { id: 8, title: "More", url: "/waitlist" },
+        { id: 8, title: "Community", url: "/community" },
       ],
     },
     {
       title: "Resources",
       links: [
-        { id: 9, title: "Press", url: "/waitlist" },
-        { id: 10, title: "Careers", url: "/waitlist" },
-        { id: 11, title: "Newsletters", url: "/waitlist" },
-        { id: 12, title: "More", url: "/waitlist" },
+        { id: 9, title: "Press", url: "/blog" },
+        { id: 10, title: "Careers", url: "/community" },
+        { id: 11, title: "Newsletter", url: "/blog" },
+        { id: 12, title: "Help Center", url: "/help" },
       ],
     },
   ],

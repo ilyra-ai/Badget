@@ -1,11 +1,13 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Calendar, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { SectionHeader } from "@/components/section-header";
-import { siteConfig } from "@/lib/config";
+import { useMarketingContent } from "@/lib/marketing-translations";
 
 export function QuoteSection() {
-  const { quoteSection } = siteConfig;
+  const { quoteSection } = useMarketingContent();
 
   return (
     <section
