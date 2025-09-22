@@ -84,7 +84,6 @@
 
 import {
   SuspendedTransactionsHeaderSection,
-  SuspendedTransactionsStatsSection,
   SuspendedTransactionsFilterSection,
   SuspendedTransactionsTableSection,
 } from "@/components/transactions/transactions-async-components";

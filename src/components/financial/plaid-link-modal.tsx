@@ -12,15 +12,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import {
-  Search,
-  Plus,
-  Building2,
-  CreditCard,
-  Banknote,
-  AlertCircle,
-  ExternalLink,
-} from "lucide-react";
+import { Search, Plus, Building2, AlertCircle } from "lucide-react";
 import { createLinkToken, exchangePublicToken } from "@/actions/plaid-actions";
 import { createGoCardlessRequisition } from "@/actions/gocardless-actions";
 import { toast } from "sonner";
@@ -157,7 +149,7 @@ export function PlaidLinkModal({ onSuccess }: BankConnectionModalProps) {
     return <IconComponent className="h-6 w-6 text-muted-foreground" />;
   };
 
-  const getBadgeVariant = (type: string) => {
+  const getBadgeVariant = (type: string): "default" | "secondary" | "outline" => {
     switch (type) {
       case "Major Bank":
         return "default";
@@ -299,7 +291,7 @@ export function PlaidLinkModal({ onSuccess }: BankConnectionModalProps) {
                     <div className="font-medium truncate">{bank.displayName}</div>
                     <div className="flex items-center gap-1 mt-1">
                       <Badge
-                        variant={getBadgeVariant(bank.type) as any}
+                        variant={getBadgeVariant(bank.type)}
                         className="text-xs"
                       >
                         {bank.type}
@@ -321,9 +313,9 @@ export function PlaidLinkModal({ onSuccess }: BankConnectionModalProps) {
             {filteredBanks.length === 0 && searchQuery && (
               <div className="text-center py-8 text-muted-foreground">
                 <Building2 className="h-8 w-8 mx-auto mb-2 opacity-50" />
-                <p>No banks found matching "{searchQuery}"</p>
+                <p>No banks found matching &quot;{searchQuery}&quot;</p>
                 <p className="text-sm">
-                  Try the "Connect Bank Account" button above to search all
+                  Try the &quot;Connect Bank Account&quot; button above to search all
                   supported institutions.
                 </p>
               </div>
@@ -367,7 +359,7 @@ export function PlaidLinkModal({ onSuccess }: BankConnectionModalProps) {
                   Your data is secure
                 </h5>
                 <p className="text-sm text-blue-700 dark:text-blue-300">
-                  We use Plaid's bank-level security with 256-bit encryption. We
+                  We use Plaid&apos;s bank-level security with 256-bit encryption. We
                   never store your banking credentials and can only access
                   read-only transaction data.
                 </p>

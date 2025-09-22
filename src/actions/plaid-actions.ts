@@ -213,8 +213,7 @@ export async function importTransactions(startDate?: Date, endDate?: Date) {
         access_token: item.accessToken,
       };
 
-      const accountsResponse = await plaidClient.accountsGet(accountsRequest);
-      const accounts = accountsResponse.data.accounts;
+      await plaidClient.accountsGet(accountsRequest);
 
       // Set date range (default to last 30 days)
       const end = endDate || new Date();

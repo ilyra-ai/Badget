@@ -1,10 +1,18 @@
 import { Author } from "./author";
 import BlurImage from "@/lib/blur-image";
-import Image from "next/image";
+import Image, { type ImageProps } from "next/image";
 import Link from "next/link";
+import type { AnchorHTMLAttributes, ReactNode } from "react";
 
 // Custom Image component for MDX that uses BlurImage
-function MDXImage({ src, alt, width, height, ...props }: any) {
+type MDXImageProps = Omit<ImageProps, "src" | "alt"> & {
+  src: ImageProps["src"];
+  alt?: string;
+  width?: number;
+  height?: number;
+};
+
+function MDXImage({ src, alt, width, height, ...props }: MDXImageProps) {
   // If it's a relative path or external image, use BlurImage
   if (typeof src === "string") {
     return (
@@ -29,10 +37,16 @@ function MDXImage({ src, alt, width, height, ...props }: any) {
 }
 
 // Custom Link component for MDX that handles internal vs external links
-function MDXLink({ href, children, ...props }: any) {
+type MDXLinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href"> & {
+  href?: string;
+  children: ReactNode;
+};
+
+function MDXLink({ href, children, ...props }: MDXLinkProps) {
   // Check if it's an internal link
-  const isInternal = href && (href.startsWith("/") || href.startsWith("#"));
-  const isEmail = href && href.startsWith("mailto:");
+  const isInternal =
+    typeof href === "string" && (href.startsWith("/") || href.startsWith("#"));
+  const isEmail = typeof href === "string" && href.startsWith("mailto:");
 
   if (isInternal) {
     // Internal link - use Next.js Link for better performance and SEO
@@ -63,7 +77,7 @@ function MDXLink({ href, children, ...props }: any) {
   // External link - add SEO and security attributes
   return (
     <a
-      href={href}
+      href={typeof href === "string" ? href : undefined}
       target="_blank"
       rel="noopener noreferrer"
       className="text-primary hover:text-primary/80 underline underline-offset-4 transition-colors inline-flex items-center gap-1"

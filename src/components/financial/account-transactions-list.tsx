@@ -269,7 +269,6 @@ export function AccountTransactionsList({
             </p>
           </div>
           <AccountTransactionsFilter
-            accountId={account.id}
             currentSearch={searchParams.search}
             currentStatus={searchParams.status}
           />

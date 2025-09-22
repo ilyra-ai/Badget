@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
-import { allHelps } from "content-collections";
+import { allHelps, type Help } from "content-collections";
 import Fuse from "fuse.js";
 import {
   Dialog,
@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Search, Clock, Calendar, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
@@ -22,7 +21,9 @@ interface HelpSearchDialogProps {
 }
 
 // Prepare help articles for search
-const searchableHelps = allHelps.map((article) => ({
+type SearchableHelp = Help & { searchText: string };
+
+const searchableHelps: SearchableHelp[] = allHelps.map((article) => ({
   ...article,
   // Combine all searchable text
   searchText: `${article.title} ${article.description} ${article.summary || ""} ${
@@ -31,7 +32,7 @@ const searchableHelps = allHelps.map((article) => ({
 }));
 
 // Configure Fuse.js options
-const fuseOptions = {
+const fuseOptions: Fuse.IFuseOptions<SearchableHelp> = {
   keys: [
     { name: "title", weight: 0.4 },
     { name: "description", weight: 0.3 },
@@ -48,11 +49,16 @@ const fuseOptions = {
 
 export function HelpSearchDialog({ open, onOpenChange }: HelpSearchDialogProps) {
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState<any[]>([]);
+  const [results, setResults] = useState<
+    Fuse.FuseResult<SearchableHelp>[]
+  >([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   // Initialize Fuse.js
-  const fuse = useMemo(() => new Fuse(searchableHelps, fuseOptions), []);
+  const fuse = useMemo(
+    () => new Fuse<SearchableHelp>(searchableHelps, fuseOptions),
+    []
+  );
 
   // Perform search when query changes
   useEffect(() => {
@@ -149,7 +155,7 @@ export function HelpSearchDialog({ open, onOpenChange }: HelpSearchDialogProps) 
           {query.trim().length > 0 && results.length === 0 && (
             <div className="px-6 py-8 text-center text-muted-foreground">
               <Search className="w-12 h-12 mx-auto mb-4 opacity-50" />
-              <p>No articles found for "{query}"</p>
+              <p>No articles found for &quot;{query}&quot;</p>
               <p className="text-sm mt-2">Try searching with different keywords</p>
             </div>
           )}
@@ -205,7 +211,7 @@ export function HelpSearchDialog({ open, onOpenChange }: HelpSearchDialogProps) 
                           {/* Tags */}
                           {article.tags && article.tags.length > 0 && (
                             <div className="flex flex-wrap gap-1 mt-3">
-                              {article.tags.slice(0, 3).map((tag: string) => (
+                              {article.tags.slice(0, 3).map((tag) => (
                                 <Badge key={tag} variant="secondary" className="text-xs">
                                   {tag}
                                 </Badge>

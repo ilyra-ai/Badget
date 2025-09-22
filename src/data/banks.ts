@@ -1,4 +1,4 @@
-import { Building2, CreditCard, Banknote } from "lucide-react";
+import { Building2, CreditCard } from "lucide-react";
 
 export type BankProvider = "PLAID" | "GOCARDLESS";
 
