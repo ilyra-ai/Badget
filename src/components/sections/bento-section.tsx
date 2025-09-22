@@ -1,10 +1,12 @@
 "use client";
 
 import { SectionHeader } from "@/components/section-header";
-import { siteConfig } from "@/lib/config";
+import { useMarketingContent } from "@/lib/marketing-translations";
 
 export function BentoSection() {
-  const { title, description, items } = siteConfig.bentoSection;
+  const {
+    bentoSection: { title, description, items },
+  } = useMarketingContent();
 
   return (
     <section

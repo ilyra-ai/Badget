@@ -1,9 +1,11 @@
+"use client";
+
 import { HeroVideoSection } from "@/components/sections/hero-video-section";
-import { siteConfig } from "@/lib/config";
+import { useMarketingContent } from "@/lib/marketing-translations";
 import Link from "next/link";
 
 export function HeroSection() {
-  const { hero } = siteConfig;
+  const { hero } = useMarketingContent();
 
   return (
     <section id="hero" className="w-full relative">

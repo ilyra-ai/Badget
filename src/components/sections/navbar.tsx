@@ -3,7 +3,8 @@
 import { Icons } from "@/components/icons";
 import { NavMenu } from "@/components/nav-menu";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { siteConfig } from "@/lib/config";
+import { LanguageSwitcher } from "@/components/language-switcher";
+import { useMarketingContent } from "@/lib/marketing-translations";
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion, useScroll } from "motion/react";
@@ -55,12 +56,14 @@ export function Navbar() {
   const [hasScrolled, setHasScrolled] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
+  const { nav, hero, footer } = useMarketingContent();
+  const navLinks = nav.links;
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = siteConfig.nav.links.map((item) =>
-        item.href.substring(1)
-      );
+      const sections = navLinks
+        .filter((item) => item.href.startsWith("#"))
+        .map((item) => item.href.substring(1));
 
       for (const section of sections) {
         const element = document.getElementById(section);
@@ -78,7 +81,7 @@ export function Navbar() {
     handleScroll();
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [navLinks]);
 
   useEffect(() => {
     const unsubscribe = scrollY.on("change", (latest) => {
@@ -113,7 +116,7 @@ export function Navbar() {
           <div className="flex h-[56px] items-center justify-between p-4">
             <Link href="/" className="flex items-center gap-3">
               {/* <Icons.logo className="size-7 md:size-10" /> */}
-              <p className="text-lg font-semibold text-primary">Badget</p>
+              <p className="text-lg font-semibold text-primary">{footer.brand}</p>
             </Link>
 
             <NavMenu />
@@ -122,11 +125,12 @@ export function Navbar() {
               <div className="flex items-center space-x-6">
                 <Link
                   className="bg-secondary h-8 hidden md:flex items-center justify-center text-sm font-normal tracking-wide rounded-full text-secondary-foreground w-fit px-4 shadow-[inset_0_1px_2px_rgba(255,255,255,0.25),0_3px_3px_-1.5px_rgba(16,24,40,0.06),0_1px_1px_rgba(16,24,40,0.08)] border border-white/[0.12]"
-                  href="/waitlist"
+                  href={hero.cta.primary.href}
                 >
-                  Try for free
+                  {hero.cta.primary.text}
                 </Link>
               </div>
+              <LanguageSwitcher />
               <ThemeToggle />
               <button
                 className="md:hidden border border-border size-8 rounded-md cursor-pointer flex items-center justify-center"
@@ -169,14 +173,17 @@ export function Navbar() {
                 <div className="flex items-center justify-between">
                   <Link href="/" className="flex items-center gap-3">
                     <Icons.logo className="size-7 md:size-10" />
-                    <p className="text-lg font-semibold text-primary">Badget</p>
+                    <p className="text-lg font-semibold text-primary">{footer.brand}</p>
                   </Link>
-                  <button
-                    onClick={toggleDrawer}
-                    className="border border-border rounded-md p-1 cursor-pointer"
-                  >
-                    <X className="size-5" />
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <LanguageSwitcher />
+                    <button
+                      onClick={toggleDrawer}
+                      className="border border-border rounded-md p-1 cursor-pointer"
+                    >
+                      <X className="size-5" />
+                    </button>
+                  </div>
                 </div>
 
                 <motion.ul
@@ -184,7 +191,7 @@ export function Navbar() {
                   variants={drawerMenuContainerVariants}
                 >
                   <AnimatePresence>
-                    {siteConfig.nav.links.map((item) => (
+                    {navLinks.map((item) => (
                       <motion.li
                         key={item.id}
                         className="p-2.5 border-b border-border last:border-b-0"

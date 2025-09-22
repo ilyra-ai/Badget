@@ -1,12 +1,12 @@
-# Badget - AI-Powered Financial Management Platform
+# Lyra-finAI - AI-Powered Financial Management Platform
 
 > **Ushering in a new era of financial management with cutting-edge AI**
 
-Badget redefines how you track, analyze, and optimize your finances, ensuring smarter, more secure financial decisions. Gain unparalleled insights into your spending habits and financial patterns, empowering you to budget better and experience more.
+Lyra-finAI redefines how you track, analyze, and optimize your finances, ensuring smarter, more secure financial decisions. Gain unparalleled insights into your spending habits and financial patterns, empowering you to budget better and experience more.
 
 ## 🎯 Vision & Value Proposition
 
-Badget aims to be the "Copilot for Money" - an AI-powered financial management platform that provides:
+Lyra-finAI aims to be the "Copilot for Money" - an AI-powered financial management platform that provides:
 
 - **Unified Financial Dashboard** - All accounts in one place via Plaid integration
 - **AI-Driven Insights** - Smart spending analysis, trend detection, and personalized recommendations
@@ -122,7 +122,7 @@ AppUser → Family → FinancialAccount
 
 ### Data Models Integration
 ```typescript
-// Plaid → Badget Mapping
+// Plaid → Lyra-finAI Mapping
 PlaidAccount → FinancialAccount
 PlaidTransaction → Transaction + Category (AI-assigned)
 PlaidBalance → Real-time account balance updates
@@ -291,4 +291,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ---
 
-**Ready to revolutionize your financial management experience with Badget? Let's build the future of personal finance together!** 🚀
+**Ready to revolutionize your financial management experience with Lyra-finAI? Let's build the future of personal finance together!** 🚀

@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Accordion,
   AccordionContent,
@@ -5,10 +7,10 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { SectionHeader } from "@/components/section-header";
-import { siteConfig } from "@/lib/config";
+import { useMarketingContent } from "@/lib/marketing-translations";
 
 export function FAQSection() {
-  const { faqSection } = siteConfig;
+  const { faqSection } = useMarketingContent();
 
   return (
     <section

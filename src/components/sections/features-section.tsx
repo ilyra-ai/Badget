@@ -1,10 +1,20 @@
+"use client";
+
 import { SectionHeader } from "@/components/section-header";
 import { cn } from "@/lib/utils";
 import { PiggyBank, BarChart3 } from "lucide-react";
 import Image from "next/image";
 import { ReactNode } from "react";
+import { useMarketingContent } from "@/lib/marketing-translations";
 
 export default function FeaturesSection() {
+  const { featuresSection } = useMarketingContent();
+  const [
+    firstCard = { eyebrow: "", heading: "", body: "" },
+    secondCard = { eyebrow: "", heading: "", body: "" },
+  ] = featuresSection.cards;
+  const metrics = featuresSection.highlight.metrics;
+
   return (
     <section
       id="features"
@@ -17,11 +27,10 @@ export default function FeaturesSection() {
 
         <SectionHeader>
           <h2 className="text-3xl md:text-4xl font-medium tracking-tighter text-center text-balance pb-1">
-            Tailored for Your Financial Success
+            {featuresSection.title}
           </h2>
           <p className="text-muted-foreground text-center text-balance font-medium">
-            Every recommendation, insight, and suggestion is personalized to
-            your unique financial situation and goals.
+            {featuresSection.description}
           </p>
         </SectionHeader>
 
@@ -30,12 +39,12 @@ export default function FeaturesSection() {
             <div className="p-6">
               <span className="text-muted-foreground flex items-center gap-2">
                 <PiggyBank className="size-4" />
-                Custom Budget Optimization
+                {firstCard.eyebrow}
               </span>
               <p className="mt-8 text-2xl font-semibold">
-                AI creates budgets that actually work for your lifestyle,
-                automatically adjusting to help you save more.
+                {firstCard.heading}
               </p>
+              <p className="mt-4 text-sm text-muted-foreground">{firstCard.body}</p>
             </div>
 
             <div className="relative mb-6 border-t border-dashed sm:mb-0 flex-1">
@@ -56,12 +65,12 @@ export default function FeaturesSection() {
             <div className="p-6">
               <span className="text-muted-foreground flex items-center gap-2">
                 <BarChart3 className="size-4" />
-                Behavioral Spending Insights
+                {secondCard.eyebrow}
               </span>
               <p className="mt-8 text-2xl font-semibold">
-                Understand your spending patterns and discover optimization
-                opportunities through AI-powered analysis.
+                {secondCard.heading}
               </p>
+              <p className="mt-4 text-sm text-muted-foreground">{secondCard.body}</p>
             </div>
 
             <div className="relative mb-6 sm:mb-0 flex-1">
@@ -85,28 +94,27 @@ export default function FeaturesSection() {
 
               <div className="relative z-10 p-8 flex flex-col items-center justify-center h-full">
                 <p className="mx-auto mb-8 max-w-md text-balance text-center text-2xl font-semibold text-primary">
-                  AI-powered insights that adapt to your unique financial
-                  patterns and goals.
+                  {featuresSection.highlight.description}
                 </p>
 
                 <div className="flex justify-center gap-6 overflow-hidden">
                   <CircularUI
-                    label="Income"
+                    label={metrics[0]}
                     circles={[{ pattern: "border" }, { pattern: "border" }]}
                   />
 
                   <CircularUI
-                    label="Budget"
+                    label={metrics[1] ?? ""}
                     circles={[{ pattern: "none" }, { pattern: "primary" }]}
                   />
 
                   <CircularUI
-                    label="Savings"
+                    label={metrics[2] ?? ""}
                     circles={[{ pattern: "blue" }, { pattern: "none" }]}
                   />
 
                   <CircularUI
-                    label="Goals"
+                    label={metrics[3] ?? ""}
                     circles={[{ pattern: "primary" }, { pattern: "none" }]}
                     className="hidden sm:block"
                   />

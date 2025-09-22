@@ -1,6 +1,6 @@
 "use client";
 
-import { siteConfig } from "@/lib/config";
+import { useMarketingContent } from "@/lib/marketing-translations";
 import { motion } from "motion/react";
 import Link from "next/link";
 import React, { useRef, useState } from "react";
@@ -10,8 +10,6 @@ interface NavItem {
   href: string;
 }
 
-const navs: NavItem[] = siteConfig.nav.links;
-
 export function NavMenu() {
   const ref = useRef<HTMLUListElement>(null);
   const [left, setLeft] = useState(0);
@@ -19,11 +17,17 @@ export function NavMenu() {
   const [isReady, setIsReady] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
   const [isManualScroll, setIsManualScroll] = useState(false);
+  const { nav } = useMarketingContent();
+  const navs: NavItem[] = nav.links;
 
   React.useEffect(() => {
     // Initialize with first nav item
+    const firstAnchor = navs.find((item) => item.href.startsWith("#"));
+    if (!firstAnchor) {
+      return;
+    }
     const firstItem = ref.current?.querySelector(
-      `[href="#${navs[0].href.substring(1)}"]`,
+      `[href="${firstAnchor.href}"]`,
     )?.parentElement;
     if (firstItem) {
       const rect = firstItem.getBoundingClientRect();
@@ -31,14 +35,16 @@ export function NavMenu() {
       setWidth(rect.width);
       setIsReady(true);
     }
-  }, []);
+  }, [navs]);
 
   React.useEffect(() => {
     const handleScroll = () => {
       // Skip scroll handling during manual click scrolling
       if (isManualScroll) return;
 
-      const sections = navs.map((item) => item.href.substring(1));
+      const sections = navs
+        .filter((item) => item.href.startsWith("#"))
+        .map((item) => item.href.substring(1));
 
       // Find the section closest to viewport top
       let closestSection = sections[0];
@@ -71,7 +77,7 @@ export function NavMenu() {
     window.addEventListener("scroll", handleScroll);
     handleScroll(); // Initial check
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isManualScroll]);
+  }, [isManualScroll, navs]);
 
   const handleClick = (
     e: React.MouseEvent<HTMLAnchorElement>,

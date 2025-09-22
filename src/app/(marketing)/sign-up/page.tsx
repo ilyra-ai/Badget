@@ -1,20 +1,20 @@
 "use client";
 
-import SignIn from "@/components/auth/sign-in";
+import SignUp from "@/components/auth/sign-up";
 import { useMarketingLocale } from "@/lib/marketing-translations";
 
 const copy = {
   en: {
-    title: "Sign in to Lyra-finAI",
-    subtitle: "Welcome back! Enter your credentials to access your dashboard.",
+    title: "Create your Lyra-finAI account",
+    subtitle: "Start for free and experience AI-guided money management in minutes.",
   },
   pt: {
-    title: "Faça login na Lyra-finAI",
-    subtitle: "Bem-vindo de volta! Insira suas credenciais para acessar o painel.",
+    title: "Crie sua conta na Lyra-finAI",
+    subtitle: "Comece grátis e organize suas finanças com IA em poucos minutos.",
   },
 } satisfies Record<"en" | "pt", { title: string; subtitle: string }>;
 
-export default function SignInPage() {
+export default function SignUpPage() {
   const { locale } = useMarketingLocale();
   const content = copy[locale];
 
@@ -26,7 +26,7 @@ export default function SignInPage() {
       <p className="text-muted-foreground mb-8 text-center max-w-md">
         {content.subtitle}
       </p>
-      <SignIn />
+      <SignUp />
     </main>
   );
 }

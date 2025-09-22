@@ -3,11 +3,12 @@
 // import { Icons } from "@/components/icons";
 import { FlickeringGrid } from "@/components/ui/flickering-grid";
 import { useMediaQuery } from "@/hooks/use-media-query";
-import { siteConfig } from "@/lib/config";
+import { useMarketingContent } from "@/lib/marketing-translations";
 import { ChevronRightIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 export function FooterSection() {
   const tablet = useMediaQuery("(max-width: 1024px)");
+  const { footer } = useMarketingContent();
 
   return (
     <footer id="footer" className="w-full pb-0">
@@ -15,10 +16,10 @@ export function FooterSection() {
         <div className="flex flex-col items-start justify-start gap-y-5 max-w-xs mx-0">
           <Link href="/" className="flex items-center gap-2">
             {/* <Icons.logo className="size-8" /> */}
-            <p className="text-xl font-semibold text-primary">Badget</p>
+            <p className="text-xl font-semibold text-primary">{footer.brand}</p>
           </Link>
           <p className="tracking-tight text-muted-foreground font-medium">
-            {siteConfig.hero.description}
+            {footer.description}
           </p>
           <div className="flex items-center gap-2 dark:hidden">
             {/* <Icons.soc2 className="size-12" /> */}
@@ -33,7 +34,7 @@ export function FooterSection() {
         </div>
         <div className="pt-5 md:w-1/2">
           <div className="flex flex-col items-start justify-start md:flex-row md:items-center md:justify-between gap-y-5 lg:pl-10">
-            {siteConfig.footerLinks.map((column, columnIndex) => (
+            {footer.columns.map((column, columnIndex) => (
               <ul key={columnIndex} className="flex flex-col gap-y-2">
                 <li className="mb-2 text-sm font-semibold text-primary">
                   {column.title}
@@ -58,7 +59,7 @@ export function FooterSection() {
         <div className="absolute inset-0 bg-gradient-to-t from-transparent to-background z-10 from-40%" />
         <div className="absolute inset-0 mx-6">
           <FlickeringGrid
-            text={tablet ? "Badget" : "Makes you save money"}
+            text={tablet ? footer.marquee.mobile : footer.marquee.desktop}
             fontSize={tablet ? 70 : 90}
             className="h-full w-full"
             squareSize={2}
