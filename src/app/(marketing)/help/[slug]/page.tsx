@@ -5,13 +5,13 @@ import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock, ArrowLeft, Edit } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { formatDistanceToNow, format } from "date-fns";
+import { format } from "date-fns";
 import { EnhancedTableOfContents } from "@/components/blog/enhanced-table-of-contents";
 import { mdxComponents } from "@/components/mdx/mdx-components";
 import { constructMetadata } from "@/lib/construct-metadata";
 
 export async function generateStaticParams() {
-  return allHelps.map((article: any) => ({
+  return allHelps.map((article) => ({
     slug: article.slug,
   }));
 }
@@ -22,7 +22,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const article = allHelps.find((article: any) => article.slug === slug);
+  const article = allHelps.find((article) => article.slug === slug);
 
   if (!article) {
     return constructMetadata({
@@ -44,7 +44,7 @@ export default async function HelpArticle({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const article = allHelps.find((article: any) => article.slug === slug);
+  const article = allHelps.find((article) => article.slug === slug);
 
   if (!article) {
     notFound();
@@ -133,9 +133,10 @@ export default async function HelpArticle({
               <section className="mt-16 pt-12 border-t border-border">
                 <h2 className="text-2xl font-bold mb-6">Related Documentation</h2>
                 <div className="grid gap-6 md:grid-cols-2">
-                  {article.related.map((relatedSlug: string) => {
+                  {article.related.map((relatedSlug) => {
                     const relatedArticle = allHelps.find(
-                      (a: any) => a.slug === relatedSlug
+                      (relatedArticleCandidate) =>
+                        relatedArticleCandidate.slug === relatedSlug
                     );
                     if (!relatedArticle) return null;
 

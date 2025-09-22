@@ -13,13 +13,11 @@ import {
 } from "@/components/ui/select";
 
 interface AccountTransactionsFilterProps {
-  accountId: string;
   currentSearch?: string;
   currentStatus?: string;
 }
 
 export function AccountTransactionsFilter({
-  accountId,
   currentSearch,
   currentStatus,
 }: AccountTransactionsFilterProps) {

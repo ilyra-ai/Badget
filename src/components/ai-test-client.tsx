@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -18,10 +18,110 @@ import {
   Code,
 } from "lucide-react";
 
+type BudgetRecommendation = {
+  categoryName: string;
+  recommendedBudget: number;
+  averageMonthlySpend: number;
+  explanation?: string;
+};
+
+type BudgetRecommendationsResult = {
+  summary?: string;
+  recommendations: BudgetRecommendation[];
+};
+
+type TransactionAnomaly = {
+  categoryName: string;
+  amount: number;
+  reason: string;
+};
+
+type CategoryForecast = {
+  categoryName: string;
+  projectedNextMonth: number;
+};
+
+type AiResultError = {
+  error: string;
+};
+
+type AiFunctionName =
+  | "generateBudgetRecommendations"
+  | "detectTransactionAnomalies"
+  | "forecastCategorySpending"
+  | "answerFinanceQuestion"
+  | "generateBudgetTips"
+  | "runAiPrompt";
+
+type AiResultValue =
+  | BudgetRecommendationsResult
+  | TransactionAnomaly[]
+  | CategoryForecast[]
+  | string
+  | AiResultError;
+
+type AiResults = Partial<Record<AiFunctionName, AiResultValue>>;
+
+const isErrorResult = (value: unknown): value is AiResultError => {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    typeof (value as { error?: unknown }).error === "string"
+  );
+};
+
+const isBudgetRecommendationsResult = (
+  value: unknown
+): value is BudgetRecommendationsResult => {
+  if (typeof value !== "object" || value === null) {
+    return false;
+  }
+
+  const result = value as Partial<BudgetRecommendationsResult>;
+  return Array.isArray(result.recommendations);
+};
+
+const isTransactionAnomalyArray = (
+  value: unknown
+): value is TransactionAnomaly[] => {
+  return (
+    Array.isArray(value) &&
+    value.every(
+      (item) =>
+        typeof item === "object" &&
+        item !== null &&
+        typeof (item as Partial<TransactionAnomaly>).categoryName === "string" &&
+        typeof (item as Partial<TransactionAnomaly>).amount === "number" &&
+        typeof (item as Partial<TransactionAnomaly>).reason === "string"
+    )
+  );
+};
+
+const isCategoryForecastArray = (
+  value: unknown
+): value is CategoryForecast[] => {
+  return (
+    Array.isArray(value) &&
+    value.every(
+      (item) =>
+        typeof item === "object" &&
+        item !== null &&
+        typeof (item as Partial<CategoryForecast>).categoryName === "string" &&
+        typeof (item as Partial<CategoryForecast>).projectedNextMonth === "number"
+    )
+  );
+};
+
 type AiTestClientProps = {
-  generateBudgetRecommendations: (months?: number) => Promise<any>;
-  detectTransactionAnomalies: (months?: number) => Promise<any>;
-  forecastCategorySpending: (months?: number) => Promise<any>;
+  generateBudgetRecommendations: (
+    months?: number
+  ) => Promise<BudgetRecommendationsResult>;
+  detectTransactionAnomalies: (
+    months?: number
+  ) => Promise<TransactionAnomaly[]>;
+  forecastCategorySpending: (
+    months?: number
+  ) => Promise<CategoryForecast[]>;
   answerFinanceQuestion: (question: string) => Promise<string>;
   generateBudgetTips: (months?: number) => Promise<string>;
   runAiPrompt: (prompt: string) => Promise<string>;
@@ -36,7 +136,7 @@ export function AiTestClient({
   runAiPrompt,
 }: AiTestClientProps) {
   const [loading, setLoading] = useState<string | null>(null);
-  const [results, setResults] = useState<Record<string, any>>({});
+  const [results, setResults] = useState<AiResults>({});
   const [question, setQuestion] = useState("");
   const [prompt, setPrompt] = useState("");
   const [months, setMonths] = useState(3);
@@ -52,8 +152,8 @@ export function AiTestClient({
   });
 
   const handleTest = async (
-    functionName: string,
-    testFunction: () => Promise<any>
+    functionName: AiFunctionName,
+    testFunction: () => Promise<AiResultValue>
   ) => {
     console.log(`🚀 Starting test: ${functionName}`);
     setLoading(functionName);
@@ -77,8 +177,12 @@ export function AiTestClient({
   };
 
   // Format budget recommendations for user-friendly display
-  const formatBudgetRecommendations = (result: any) => {
-    if (!result?.recommendations) return "No recommendations available";
+  const formatBudgetRecommendations = (
+    result: BudgetRecommendationsResult
+  ) => {
+    if (result.recommendations.length === 0) {
+      return "No recommendations available";
+    }
 
     return (
       <div className="space-y-4">
@@ -92,7 +196,7 @@ export function AiTestClient({
         )}
         <div className="space-y-3">
           <h4 className="font-medium text-gray-900">Budget Recommendations</h4>
-          {result.recommendations.map((rec: any, index: number) => (
+          {result.recommendations.map((rec, index) => (
             <div key={index} className="border rounded-lg p-4 bg-gray-50">
               <div className="flex justify-between items-center mb-2">
                 <h5 className="font-medium text-gray-900">
@@ -118,8 +222,8 @@ export function AiTestClient({
   };
 
   // Format anomalies for user-friendly display
-  const formatAnomalies = (result: any) => {
-    if (!Array.isArray(result) || result.length === 0) {
+  const formatAnomalies = (result: TransactionAnomaly[]) => {
+    if (result.length === 0) {
       return (
         <div className="text-gray-600">
           No anomalies detected in your transactions.
@@ -132,7 +236,7 @@ export function AiTestClient({
         <h4 className="font-medium text-gray-900">
           Unusual Transactions Found
         </h4>
-        {result.map((anomaly: any, index: number) => (
+        {result.map((anomaly, index) => (
           <div
             key={index}
             className="border border-orange-200 rounded-lg p-4 bg-orange-50"
@@ -153,17 +257,17 @@ export function AiTestClient({
   };
 
   // Format forecasts for user-friendly display
-  const formatForecasts = (result: any) => {
-    if (!Array.isArray(result) || result.length === 0) {
+  const formatForecasts = (result: CategoryForecast[]) => {
+    if (result.length === 0) {
       return <div className="text-gray-600">No forecasts available.</div>;
     }
 
     return (
       <div className="space-y-3">
         <h4 className="font-medium text-gray-900">
-          Next Month's Spending Forecast
+          Next Month&apos;s Spending Forecast
         </h4>
-        {result.map((forecast: any, index: number) => (
+        {result.map((forecast, index) => (
           <div key={index} className="border rounded-lg p-4 bg-gray-50">
             <div className="flex justify-between items-center">
               <h5 className="font-medium text-gray-900">
@@ -180,22 +284,26 @@ export function AiTestClient({
   };
 
   // Format text responses (tips, questions, prompts)
-  const formatTextResponse = (result: any) => {
-    if (typeof result === "string") {
-      return (
-        <div className="border rounded-lg p-4 bg-gray-50">
-          <div className="whitespace-pre-wrap text-gray-900">{result}</div>
-        </div>
-      );
+  const formatTextResponse = (result: string) => {
+    if (result.length === 0) {
+      return <div className="text-gray-600">No response available.</div>;
     }
-    return <div className="text-gray-600">No response available.</div>;
+
+    return (
+      <div className="border rounded-lg p-4 bg-gray-50">
+        <div className="whitespace-pre-wrap text-gray-900">{result}</div>
+      </div>
+    );
   };
 
   // Enhanced result display with tabs
-  const formatResult = (result: any, functionName: string) => {
+  const formatResult = (
+    result: AiResultValue | undefined,
+    functionName: AiFunctionName
+  ) => {
     if (!result) return null;
 
-    if (result.error) {
+    if (isErrorResult(result)) {
       return (
         <div className="border border-red-300 rounded-lg p-4 bg-red-50 text-red-800 text-sm">
           <strong>Error:</strong> {result.error}
@@ -203,27 +311,33 @@ export function AiTestClient({
       );
     }
 
-    // Get user-friendly formatted content based on function type
-    let userFriendlyContent;
+    let userFriendlyContent: ReactNode = (
+      <div className="text-gray-600">Result available in JSON tab.</div>
+    );
+
     switch (functionName) {
       case "generateBudgetRecommendations":
-        userFriendlyContent = formatBudgetRecommendations(result);
+        if (isBudgetRecommendationsResult(result)) {
+          userFriendlyContent = formatBudgetRecommendations(result);
+        }
         break;
       case "detectTransactionAnomalies":
-        userFriendlyContent = formatAnomalies(result);
+        if (isTransactionAnomalyArray(result)) {
+          userFriendlyContent = formatAnomalies(result);
+        }
         break;
       case "forecastCategorySpending":
-        userFriendlyContent = formatForecasts(result);
+        if (isCategoryForecastArray(result)) {
+          userFriendlyContent = formatForecasts(result);
+        }
         break;
       case "generateBudgetTips":
       case "answerFinanceQuestion":
       case "runAiPrompt":
-        userFriendlyContent = formatTextResponse(result);
+        if (typeof result === "string") {
+          userFriendlyContent = formatTextResponse(result);
+        }
         break;
-      default:
-        userFriendlyContent = (
-          <div className="text-gray-600">Result available in JSON tab.</div>
-        );
     }
 
     return (
